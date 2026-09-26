@@ -86,25 +86,28 @@
 		
 	\end{abstract}
 	\chapter{Divisibility and Prime Numbers}
+	\begin{definition}[Uncertain Integer]
+		An element $A \in \tsbd{K}$ is called an uncertain integer if every point-wise element $a \in A$ belongs to the set of classical integers $\mathbb{Z}$, i.e., $A \subseteq \mathbb{Z}$. The set of all uncertain integers is denoted by $\tsbd{Z}$.
+	\end{definition}
 	\begin{definition}[Divisibility]
-		Let $A, B \in \tsbd{K}$. We say that $A$ is divisible by $B$ if for every $(a, b) \in A \times B$, $a$ is divisible by $b$, and in this case, we denote $B \mid A$.
+		Let $A, B \in \tsbd{Z}$. We say that $A$ is divisible by $B$ if for every $(a, b) \in A \times B$, $a$ is divisible by $b$, and in this case, we denote $B \mid A$.
 	\end{definition}
 	\begin{theorem}[Transitivity of Divisibility]
-		Let $A, B, C \in \tsbd{K}$. If $A$ is divisible by $B$ ($B \mid A$) and $B$ is divisible by $C$ ($C \mid B$), then $A$ is divisible by $C$ ($C \mid A$).
+		Let $A, B, C \in \tsbd{Z}$. If $A$ is divisible by $B$ ($B \mid A$) and $B$ is divisible by $C$ ($C \mid B$), then $A$ is divisible by $C$ ($C \mid A$).
 	\end{theorem}
 	
 	\begin{proof}
 		Assume that $B \mid A$ and $C \mid B$.
 		
-		By Definition 1.1 on uncertain divisibility:
+		By Definition 1.2 on uncertain divisibility:
 		\begin{itemize}
 			\item Since $B \mid A$, for every $(a, b) \in A \times B$, we have $b \mid a$.
 			\item Since $C \mid B$, for every $(b', c) \in B \times C$, we have $c \mid b'$.
 		\end{itemize}
 		
-		Consider an arbitrary pair $(a, c) \in A \times C$. Since $B \in \tsbd{K}$ is non-empty, there exists at least one element $b \in B$.
+		Consider an arbitrary pair $(a, c) \in A \times C$. Since $B \in \tsbd{Z}$ is non-empty, there exists at least one element $b \in B$.
 		
-		Applying classical divisibility properties in the underlying structure $\mathbb{K}$:
+		Applying classical divisibility properties in the underlying structure $\mathbb{Z}$:
 		\begin{itemize}
 			\item From $b \in B$, we have $b \mid a$.
 			\item From $b \in B$ and $c \in C$, we have $c \mid b$.
@@ -112,19 +115,19 @@
 		
 		By the transitivity of classical divisibility ($c \mid b$ and $b \mid a \implies c \mid a$), it follows that $c \mid a$.
 		
-		Since this holds for every pair $(a, c) \in A \times C$, by Definition 1.1, $A$ is divisible by $C$, i.e., $C \mid A$.
+		Since this holds for every pair $(a, c) \in A \times C$, by Definition 1.2, $A$ is divisible by $C$, i.e., $C \mid A$.
 		
 		The proof is complete.
 	\end{proof}
 	\begin{definition}[Prime Number]
-		Let $A \in \tsbd{K}$. $A$ is called an uncertain prime number if for every $a \in A$, $a$ has exactly two divisors, namely $a$ and 1.
+		Let $A \in \tsbd{Z}$. $A$ is called an uncertain prime number if for every $a \in A$, $a$ has exactly two divisors in $\mathbb{Z}$, namely $a$ and 1.
 	\end{definition}
 	\begin{definition}[Congruence]
-		Let $A, B, N \in \tsbd{K}$. We say that $A \equiv B \pmod N$ if and only if for every $(a, b, n) \in A \times B \times N$, we have $a \equiv b \pmod n$.
+		Let $A, B, N \in \tsbd{Z}$. We say that $A \equiv B \pmod N$ if and only if for every $(a, b, n) \in A \times B \times N$, we have $a \equiv b \pmod n$.
 	\end{definition}
 	
 	\begin{proposition}[Properties of Congruence Relation]
-		Let $A, B, C, N \in \tsbd{K}$. The congruence relation in the uncertain space satisfies the following properties:
+		Let $A, B, C, N \in \tsbd{Z}$. The congruence relation in the uncertain space satisfies the following properties:
 		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
 			\item \textbf{Reflexivity:} $A \equiv A \pmod N$.
 			\item \textbf{Symmetry:} If $A \equiv B \pmod N$, then $B \equiv A \pmod N$.
@@ -133,11 +136,11 @@
 	\end{proposition}
 	
 	\begin{proof}
-		The above properties follow directly from the definition of uncertain congruence relation and the corresponding congruence properties of each element $(a, b, c, n) \in A \times B \times C \times N$ in the underlying number field $\mathbb{K}$.
+		The above properties follow directly from the definition of uncertain congruence relation and the corresponding congruence properties of each element $(a, b, c, n) \in A \times B \times C \times N$ in the underlying integer set $\mathbb{Z}$.
 	\end{proof}
 	
 	\begin{proposition}[Compatibility with Addition and Multiplication]
-		Let $A, B, C, D, N \in \tsbd{K}$. If $A \equiv B \pmod N$ and $C \equiv D \pmod N$, then:
+		Let $A, B, C, D, N \in \tsbd{Z}$. If $A \equiv B \pmod N$ and $C \equiv D \pmod N$, then:
 		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
 			\item $A + C \equiv B + D \pmod N$,
 			\item $A \cdot C \equiv B \cdot D \pmod N$.
@@ -147,7 +150,7 @@
 	\begin{proof}
 		Assume that $A \equiv B \pmod N$ and $C \equiv D \pmod N$. 
 		
-		According to Definition 1.3 on uncertain congruence, for every $n \in N$:
+		According to Definition 1.4 on uncertain congruence, for every $n \in N$:
 		\begin{itemize}
 			\item Since $A \equiv B \pmod N$, for every $(a, b) \in A \times B$, we have $a \equiv b \pmod n$.
 			\item Since $C \equiv D \pmod N$, for every $(c, d) \in C \times D$, we have $c \equiv d \pmod n$.
@@ -158,7 +161,7 @@
 		\[
 		(a + c) \equiv (b + d) \pmod n.
 		\]
-		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.3, we deduce:
+		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.4, we deduce:
 		\[
 		A + C \equiv B + D \pmod N.
 		\]
@@ -168,14 +171,20 @@
 		\[
 		a \cdot c \equiv b \cdot d \pmod n.
 		\]
-		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.3, we have:
+		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.4, we have:
 		\[
 		A \cdot C \equiv B \cdot D \pmod N.
 		\]
 		
 		The proof is complete.
 	\end{proof}
-	
+	\begin{example}[Nontrivial Spectrum Congruence]
+		Consider the uncertain modulo $N = \{5\} \in \tsbd{Z}$, and two disjoint uncertain integers $A = \{3, 8, 13\}$ and $B = \{18, 23\}$. 
+		
+		Although $A \cap B = \emptyset$, for every element $a \in A$, $b \in B$, and $n \in N$, we have $a \equiv b \pmod 5$. Thus, by Definition 1.4, $A \equiv B \pmod N$. 
+		
+		Furthermore, any mixed set $C = \{3, 23\}$ generated from elements of $A$ and $B$ satisfies $A \equiv C \equiv B \pmod N$. This illustrates that uncertain congruence acts on the entire residue spectrum rather than individual element identities, preserving algebraic structures even under element replacement.
+	\end{example}
 	\begin{thebibliography}{99}
 		\bibitem{Tran2026}
 		Tran, M. C. (2026). \textit{Extended logic and mathematics of uncertainty}. Zenodo. \url{https://doi.org/10.5281/zenodo.22948805}
