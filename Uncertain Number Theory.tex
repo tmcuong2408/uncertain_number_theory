@@ -3,7 +3,7 @@
 \ErrorsOff   % (Caution) Use only if you are sure the code has no severe logic errors
 \documentclass[a4paper,14pt, twoside]{memoir}
 \usepackage[utf8x]{inputenc}
-\usepackage[vietnamese]{babel}    
+\usepackage[english]{babel}    
 \usepackage{url}
 \usepackage{microtype}
 \usepackage{color}
@@ -68,7 +68,7 @@
 \newcommand{\kgdt}[1]{\left(#1\right)_m} % pointwise operator
 \newcommand{\kgdtmr}[1]{\left(#1\right)_{m'}} % pointwise operator
 
-\title{Lý thuyết số bất định}
+\title{Uncertain Number Theory}
 \author{
 	Tran Manh Cuong\thanks{Email: \href{mailto:tmcuong2408@gmail.com}{tmcuong2408@gmail.com} | Phone: 0353237140} \\[0.5em]
 	\small Alumnus of Faculty of Mathematics and Informatics (K11)
@@ -85,76 +85,94 @@
 	\begin{abstract}
 		
 	\end{abstract}
-	\chapter{Tính chia hết và số nguyên tố}
-	\begin{definition}[Chia hết]
-		Cho $A,B \in \tsbd{K}$ ta nói $A$ chia hết cho $B$ nếu như với mọi $(a,b) \in A \times B$ ta đều có $a$ chia hết cho $b$ và khi đó ta ký hiệu $B|A$
+	\chapter{Divisibility and Prime Numbers}
+	\begin{definition}[Divisibility]
+		Let $A, B \in \tsbd{K}$. We say that $A$ is divisible by $B$ if for every $(a, b) \in A \times B$, $a$ is divisible by $b$, and in this case, we denote $B \mid A$.
 	\end{definition}
-	\begin{definition}[Nguyên tố]
-		Cho $A \in \tsbd{K}$, $A$ được gọi là một số nguyên tố bất định nếu như mọi $a \in A$  thì $a$ chỉ có hai ước là $a$ và 1.
-	\end{definition}
-	\begin{definition}[Đồng dư]
-		Cho $A, B, N \in \tsbd{K}$, ta nói $A \equiv B \pmod N$ 
-		khi và chỉ khi với mọi $(a,b,n) \in A \times B \times N$ 
-		ta đều có $a \equiv b \pmod n$.
-	\end{definition}
-	
-	\begin{proposition}[Tính chất của quan hệ đồng dư]
-		Cho $A, B, C, N \in \tsbd{K}$. Khi đó quan hệ đồng dư trong không gian bất định thỏa mãn các tính chất sau:
-		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
-			\item \textbf{Tính phản xạ:} $A \equiv A \pmod N$.
-			\item \textbf{Tính đối xứng:} Nếu $A \equiv B \pmod N$ thì $B \equiv A \pmod N$.
-			\item \textbf{Tính bắc cầu:} Nếu $A \equiv B \pmod N$ và $B \equiv C \pmod N$ thì $A \equiv C \pmod N$.
-		\end{enumerate}
-	\end{proposition}
+	\begin{theorem}[Transitivity of Divisibility]
+		Let $A, B, C \in \tsbd{K}$. If $A$ is divisible by $B$ ($B \mid A$) and $B$ is divisible by $C$ ($C \mid B$), then $A$ is divisible by $C$ ($C \mid A$).
+	\end{theorem}
 	
 	\begin{proof}
-		Các tính chất trên suy ra trực tiếp từ định nghĩa quan hệ đồng dư bất định và tính chất đồng dư tương ứng của từng phần tử $(a, b, c, n) \in A \times B \times C \times N$ trong trường số cơ sở $\mathbb{K}$.
-	\end{proof}
-	
-	\begin{proposition}
-		Cho $A, B, C, D, N \in \tsbd{K}$. Nếu $A \equiv B \pmod N$ và $C \equiv D \pmod N$, thì:
-		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
-			\item $A + C \equiv B + D \pmod N$,
-			\item $A \cdot C \equiv B \cdot D \pmod N$.
-		\end{enumerate}
-	\end{proposition}
-	\begin{proposition}
-		Cho $A, B, C, D, N \in \tsbd{K}$. Nếu $A \equiv B \pmod N$ và $C \equiv D \pmod N$, thì:
-		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
-			\item $A + C \equiv B + D \pmod N$,
-			\item $A \cdot C \equiv B \cdot D \pmod N$.
-		\end{enumerate}
-	\end{proposition}
-	
-	\begin{proof}
-		Giả sử $A \equiv B \pmod N$ và $C \equiv D \pmod N$. 
+		Assume that $B \mid A$ and $C \mid B$.
 		
-		Theo Định nghĩa 1.3 về đồng dư bất định, với mọi $n \in N$:
+		By Definition 1.1 on uncertain divisibility:
 		\begin{itemize}
-			\item Do $A \equiv B \pmod N$, với mọi $(a, b) \in A \times B$ ta có $a \equiv b \pmod n$.
-			\item Do $C \equiv D \pmod N$, với mọi $(c, d) \in C \times D$ ta có $c \equiv d \pmod n$.
+			\item Since $B \mid A$, for every $(a, b) \in A \times B$, we have $b \mid a$.
+			\item Since $C \mid B$, for every $(b', c) \in B \times C$, we have $c \mid b'$.
 		\end{itemize}
 		
-		$\mathrm{(i)}$ Xét phần tử bất kỳ $(a+c, b+d) \in (A+C) \times (B+D)$ và $n \in N$.
-		Từ lý thuyết số cổ điển, nếu $a \equiv b \pmod n$ và $c \equiv d \pmod n$ thì:
+		Consider an arbitrary pair $(a, c) \in A \times C$. Since $B \in \tsbd{K}$ is non-empty, there exists at least one element $b \in B$.
+		
+		Applying classical divisibility properties in the underlying structure $\mathbb{K}$:
+		\begin{itemize}
+			\item From $b \in B$, we have $b \mid a$.
+			\item From $b \in B$ and $c \in C$, we have $c \mid b$.
+		\end{itemize}
+		
+		By the transitivity of classical divisibility ($c \mid b$ and $b \mid a \implies c \mid a$), it follows that $c \mid a$.
+		
+		Since this holding holds for every pair $(a, c) \in A \times C$, by Definition 1.1, $A$ is divisible by $C$, i.e., $C \mid A$.
+		
+		The proof is complete.
+	\end{proof}
+	\begin{definition}[Prime Number]
+		Let $A \in \tsbd{K}$. $A$ is called an uncertain prime number if for every $a \in A$, $a$ has exactly two divisors, namely $a$ and 1.
+	\end{definition}
+	\begin{definition}[Congruence]
+		Let $A, B, N \in \tsbd{K}$. We say that $A \equiv B \pmod N$ if and only if for every $(a, b, n) \in A \times B \times N$, we have $a \equiv b \pmod n$.
+	\end{definition}
+	
+	\begin{proposition}[Properties of Congruence Relation]
+		Let $A, B, C, N \in \tsbd{K}$. The congruence relation in the uncertain space satisfies the following properties:
+		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
+			\item \textbf{Reflexivity:} $A \equiv A \pmod N$.
+			\item \textbf{Symmetry:} If $A \equiv B \pmod N$, then $B \equiv A \pmod N$.
+			\item \textbf{Transitivity:} If $A \equiv B \pmod N$ and $B \equiv C \pmod N$, then $A \equiv C \pmod N$.
+		\end{enumerate}
+	\end{proposition}
+	
+	\begin{proof}
+		The above properties follow directly from the definition of uncertain congruence relation and the corresponding congruence properties of each element $(a, b, c, n) \in A \times B \times C \times N$ in the underlying number field $\mathbb{K}$.
+	\end{proof}
+	
+	\begin{proposition}[Compatibility with Addition and Multiplication]
+		Let $A, B, C, D, N \in \tsbd{K}$. If $A \equiv B \pmod N$ and $C \equiv D \pmod N$, then:
+		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
+			\item $A + C \equiv B + D \pmod N$,
+			\item $A \cdot C \equiv B \cdot D \pmod N$.
+		\end{enumerate}
+	\end{proposition}
+	
+	\begin{proof}
+		Assume that $A \equiv B \pmod N$ and $C \equiv D \pmod N$. 
+		
+		According to Definition 1.3 on uncertain congruence, for every $n \in N$:
+		\begin{itemize}
+			\item Since $A \equiv B \pmod N$, for every $(a, b) \in A \times B$, we have $a \equiv b \pmod n$.
+			\item Since $C \equiv D \pmod N$, for every $(c, d) \in C \times D$, we have $c \equiv d \pmod n$.
+		\end{itemize}
+		
+		$\mathrm{(i)}$ Consider an arbitrary element $(a+c, b+d) \in (A+C) \times (B+D)$ and $n \in N$.
+		From classical number theory, if $a \equiv b \pmod n$ and $c \equiv d \pmod n$, then:
 		\[
 		(a + c) \equiv (b + d) \pmod n.
 		\]
-		Vì điều này đúng với mọi $(a,b,c,d,n) \in A \times B \times C \times D \times N$, theo Định nghĩa 1.3 ta suy ra:
+		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.3, we deduce:
 		\[
 		A + C \equiv B + D \pmod N.
 		\]
 		
-		$\mathrm{(ii)}$ Tương tự, xét phần tử bất kỳ $(a \cdot c, b \cdot d) \in (A \cdot C) \times (B \cdot D)$ và $n \in N$.
-		Từ tính chất tương thích phép nhân của đồng dư cổ điển, ta có:
+		$\mathrm{(ii)}$ Similarly, consider an arbitrary element $(a \cdot c, b \cdot d) \in (A \cdot C) \times (B \cdot D)$ and $n \in N$.
+		From the multiplicative compatibility property of classical congruence, we have:
 		\[
 		a \cdot c \equiv b \cdot d \pmod n.
 		\]
-		Do điều này đúng với mọi $(a,b,c,d,n) \in A \times B \times C \times D \times N$, theo Định nghĩa 1.3 ta có:
+		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.3, we have:
 		\[
 		A \cdot C \equiv B \cdot D \pmod N.
 		\]
 		
-		Chứng minh hoàn tất.
+		The proof is complete.
 	\end{proof}
 \end{document}
