@@ -1,0 +1,160 @@
+\RequirePackage{silence}
+\WarningsOff % Turn off all warnings from all packages
+\ErrorsOff   % (Caution) Use only if you are sure the code has no severe logic errors
+\documentclass[a4paper,14pt, twoside]{memoir}
+\usepackage[utf8x]{inputenc}
+\usepackage[vietnamese]{babel}    
+\usepackage{url}
+\usepackage{microtype}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amsthm}         % Provides proof environment
+\usepackage{amssymb}
+\usepackage{mathtools}     % Includes amsmath but optimized and with more features
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{autobreak}
+\usepackage{array}          % Support for notation table formatting
+\usepackage{booktabs}       % Professional table rules
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=cyan
+}
+
+% Theorem Environments
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{md}{Proposition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{example}{Example}[chapter]
+
+% Declare Math Operators
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\setu}{s}
+\DeclareMathOperator{\dimU}{\dim}
+\DeclareMathOperator{\w}{w}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\pgr}{pgr}
+\DeclareMathOperator{\scale}{scale}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator{\Val}{Val}
+\DeclareMathOperator{\Conf}{Conf}
+
+% Custom commands
+\newcommand{\set}[1]{\left\{#1\right\}} % set
+\newcommand{\tbd}[1]{\mathcal{#1}} % uncertain set
+\newcommand{\s}[1]{\set{#1}_\mathrm{u}} % uncertain number
+\newcommand{\kbd}[1]{{#1}_\mathrm{u}} % uncertain interval
+\newcommand{\bd}[1]{\left(#1\right)_\mathrm{u}} % uncertain expression
+\newcommand{\tsbd}[1]{\mathbf{U}(\mathbb{#1})}
+\newcommand{\tsbdcapn}[2]{\mathbf{U^{#2}}(\mathbb{#1})}
+\newcommand{\tsbdts}[1]{\mathbf{U}_{\w}(\mathbb{#1})} % set of uncertain numbers
+\newcommand{\ddclmd}{\mathcal{V}} % truth measure of a proposition
+\newcommand{\ts}[1]{\w_{#1}} % Weight
+\newcommand{\gtcl}[2]{\left(#1\right)_{#2}} % truth measure
+\newcommand{\gr}[1]{\text{gr}(#1)} % graph of a function
+\newcommand{\hpw}[2]{#1_1\left(#2\right)} % point-wise function
+\newcommand{\hbd}[2]{#1_m\left(#2\right)} % uncertain function
+\newcommand{\eq}[1]{\left[#1\right]_{eq}} % eqs operator
+\newcommand{\kgdd}[1]{\left(#1\right)_1} % pointwise operator
+\newcommand{\kgddmr}[1]{\left(#1\right)_{1'}} % real operator
+\newcommand{\kgdt}[1]{\left(#1\right)_m} % pointwise operator
+\newcommand{\kgdtmr}[1]{\left(#1\right)_{m'}} % pointwise operator
+
+\title{Lý thuyết số bất định}
+\author{
+	Tran Manh Cuong\thanks{Email: \href{mailto:tmcuong2408@gmail.com}{tmcuong2408@gmail.com} | Phone: 0353237140} \\[0.5em]
+	\small Alumnus of Faculty of Mathematics and Informatics (K11)
+	\\ Thai Nguyen University of Sciences \\
+	\small Address: DJ7 Street, Thoi Hoa, Ho Chi Minh City, Vietnam \\
+	\small \textit{Research Field: Mathematics of Uncertainty}
+}
+\date{Last updated: \today}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		
+	\end{abstract}
+	\chapter{Tính chia hết và số nguyên tố}
+	\begin{definition}[Chia hết]
+		Cho $A,B \in \tsbd{K}$ ta nói $A$ chia hết cho $B$ nếu như với mọi $(a,b) \in A \times B$ ta đều có $a$ chia hết cho $b$ và khi đó ta ký hiệu $B|A$
+	\end{definition}
+	\begin{definition}[Nguyên tố]
+		Cho $A \in \tsbd{K}$, $A$ được gọi là một số nguyên tố bất định nếu như mọi $a \in A$  thì $a$ chỉ có hai ước là $a$ và 1.
+	\end{definition}
+	\begin{definition}[Đồng dư]
+		Cho $A, B, N \in \tsbd{K}$, ta nói $A \equiv B \pmod N$ 
+		khi và chỉ khi với mọi $(a,b,n) \in A \times B \times N$ 
+		ta đều có $a \equiv b \pmod n$.
+	\end{definition}
+	
+	\begin{proposition}[Tính chất của quan hệ đồng dư]
+		Cho $A, B, C, N \in \tsbd{K}$. Khi đó quan hệ đồng dư trong không gian bất định thỏa mãn các tính chất sau:
+		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
+			\item \textbf{Tính phản xạ:} $A \equiv A \pmod N$.
+			\item \textbf{Tính đối xứng:} Nếu $A \equiv B \pmod N$ thì $B \equiv A \pmod N$.
+			\item \textbf{Tính bắc cầu:} Nếu $A \equiv B \pmod N$ và $B \equiv C \pmod N$ thì $A \equiv C \pmod N$.
+		\end{enumerate}
+	\end{proposition}
+	
+	\begin{proof}
+		Các tính chất trên suy ra trực tiếp từ định nghĩa quan hệ đồng dư bất định và tính chất đồng dư tương ứng của từng phần tử $(a, b, c, n) \in A \times B \times C \times N$ trong trường số cơ sở $\mathbb{K}$.
+	\end{proof}
+	
+	\begin{proposition}
+		Cho $A, B, C, D, N \in \tsbd{K}$. Nếu $A \equiv B \pmod N$ và $C \equiv D \pmod N$, thì:
+		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
+			\item $A + C \equiv B + D \pmod N$,
+			\item $A \cdot C \equiv B \cdot D \pmod N$.
+		\end{enumerate}
+	\end{proposition}
+	\begin{proposition}
+		Cho $A, B, C, D, N \in \tsbd{K}$. Nếu $A \equiv B \pmod N$ và $C \equiv D \pmod N$, thì:
+		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
+			\item $A + C \equiv B + D \pmod N$,
+			\item $A \cdot C \equiv B \cdot D \pmod N$.
+		\end{enumerate}
+	\end{proposition}
+	
+	\begin{proof}
+		Giả sử $A \equiv B \pmod N$ và $C \equiv D \pmod N$. 
+		
+		Theo Định nghĩa 1.3 về đồng dư bất định, với mọi $n \in N$:
+		\begin{itemize}
+			\item Do $A \equiv B \pmod N$, với mọi $(a, b) \in A \times B$ ta có $a \equiv b \pmod n$.
+			\item Do $C \equiv D \pmod N$, với mọi $(c, d) \in C \times D$ ta có $c \equiv d \pmod n$.
+		\end{itemize}
+		
+		$\mathrm{(i)}$ Xét phần tử bất kỳ $(a+c, b+d) \in (A+C) \times (B+D)$ và $n \in N$.
+		Từ lý thuyết số cổ điển, nếu $a \equiv b \pmod n$ và $c \equiv d \pmod n$ thì:
+		\[
+		(a + c) \equiv (b + d) \pmod n.
+		\]
+		Vì điều này đúng với mọi $(a,b,c,d,n) \in A \times B \times C \times D \times N$, theo Định nghĩa 1.3 ta suy ra:
+		\[
+		A + C \equiv B + D \pmod N.
+		\]
+		
+		$\mathrm{(ii)}$ Tương tự, xét phần tử bất kỳ $(a \cdot c, b \cdot d) \in (A \cdot C) \times (B \cdot D)$ và $n \in N$.
+		Từ tính chất tương thích phép nhân của đồng dư cổ điển, ta có:
+		\[
+		a \cdot c \equiv b \cdot d \pmod n.
+		\]
+		Do điều này đúng với mọi $(a,b,c,d,n) \in A \times B \times C \times D \times N$, theo Định nghĩa 1.3 ta có:
+		\[
+		A \cdot C \equiv B \cdot D \pmod N.
+		\]
+		
+		Chứng minh hoàn tất.
+	\end{proof}
+\end{document}
