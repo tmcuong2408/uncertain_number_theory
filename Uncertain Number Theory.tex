@@ -1,6 +1,7 @@
 \RequirePackage{silence}
 \WarningsOff % Turn off all warnings from all packages
 \ErrorsOff   % (Caution) Use only if you are sure the code has no severe logic errors
+
 \documentclass[a4paper,14pt, twoside]{memoir}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}    
@@ -68,7 +69,7 @@
 \newcommand{\kgdt}[1]{\left(#1\right)_m} % pointwise operator
 \newcommand{\kgdtmr}[1]{\left(#1\right)_{m'}} % pointwise operator
 
-\title{Uncertain Number Theory}
+\title{Uncertain Number Theory via Weak Binary Relations}
 \author{
 	Tran Manh Cuong\thanks{Email: \href{mailto:tmcuong2408@gmail.com}{tmcuong2408@gmail.com} | Phone: 0353237140} \\[0.5em]
 	\small Alumnus of Faculty of Mathematics and Informatics (K11)
@@ -83,111 +84,141 @@
 	\maketitle
 	
 	\begin{abstract}
-		
+		This work reformulates classical Number Theory into the framework of Uncertain Mathematics using weak binary relations and global truth valuation operators over state spaces. By replacing rigid element-wise conditions with truth measures $\ddclmd \in [0,1]$, fundamental concepts such as divisibility, primality, and congruence are generalized to capture probabilistic and scenario-based spectral properties of uncertain integers.
 	\end{abstract}
-	\chapter{Divisibility and Prime Numbers}
+	
+	\chapter{Divisibility and Prime Numbers via Weak Relations}
+	
 	\begin{definition}[Uncertain Integer]
-		An element $A \in \tsbd{K}$ is called an uncertain integer if every point-wise element $a \in A$ belongs to the set of classical integers $\mathbb{Z}$, i.e., $A \subseteq \mathbb{Z}$. The set of all uncertain integers is denoted by $\tsbd{Z}$.
+		An element $A \in \tsbd{K}$ is called an uncertain integer if its set of possible values belongs to the set of classical integers $\mathbb{Z}$, i.e., $A_s \subseteq \mathbb{Z}$. The set of all uncertain integers is denoted by $\tsbd{Z}$.
 	\end{definition}
-	\begin{definition}[Divisibility]
-		Let $A, B \in \tsbd{Z}$. We say that $A$ is divisible by $B$ if for every $(a, b) \in A \times B$, $a$ is divisible by $b$, and in this case, we denote $B \mid A$.
+	
+	\begin{definition}[Weak Divisibility Relation]
+		Let $A, B \in \tsbd{Z}$ with canonical forms $A \sim (f_A, d_A)$ and $B \sim (f_B, d_B)$. The weak divisibility proposition $B \mid A$ evaluated on scenario space $\Omega = d_B \times d_A$ has the scenario truth function:
+		\[
+		v(B \mid A, (t_1, t_2)) = \begin{cases}
+			1 & \text{if } f_B(t_1) \mid f_A(t_2) \text{ in } \mathbb{Z}, \\
+			0 & \text{otherwise.}
+		\end{cases}
+		\]
+		The global truth valuation of the divisibility relation is given by:
+		\[
+		\ddclmd(B \mid A) := \frac{\lambda\big(\{(t_1, t_2) \in d_B \times d_A : f_B(t_1) \mid f_A(t_2)\}\big)}{\lambda(d_B \times d_A)}
+		\]
+		When $\ddclmd(B \mid A) = \gamma$, we write $(B \mid A)_\gamma$. If $\gamma = 1$, $A$ is strictly divisible by $B$.
 	\end{definition}
-	\begin{theorem}[Transitivity of Divisibility]
-		Let $A, B, C \in \tsbd{Z}$. If $A$ is divisible by $B$ ($B \mid A$) and $B$ is divisible by $C$ ($C \mid B$), then $A$ is divisible by $C$ ($C \mid A$).
+	
+	\begin{theorem}[Weak Modus Ponens for Divisibility Transitivity]
+		Let $A, B, C \in \tsbd{Z}$. The truth measure of weak divisibility satisfies the inference lower bound:
+		\[
+		\ddclmd(C \mid A) \ge \ddclmd(C \mid B \land B \mid A)
+		\]
+		In particular, if $(C \mid B)_1$ and $(B \mid A)_1$, then $(C \mid A)_1$.
 	\end{theorem}
 	
 	\begin{proof}
-		Assume that $B \mid A$ and $C \mid B$.
+		Let $A \sim (f_A, d_A)$, $B \sim (f_B, d_B)$, and $C \sim (f_C, d_C)$ be canonical forms. Consider the product state space $\Omega = d_C \times d_B \times d_A$ equipped with product measure $\mu = \lambda_C \times \lambda_B \times \lambda_A$.
 		
-		By Definition 1.2 on uncertain divisibility:
-		\begin{itemize}
-			\item Since $B \mid A$, for every $(a, b) \in A \times B$, we have $b \mid a$.
-			\item Since $C \mid B$, for every $(b', c) \in B \times C$, we have $c \mid b'$.
-		\end{itemize}
+		Define state subsets of $\Omega$:
+		\begin{align*}
+			\Omega_{C \mid B} &= \{(t_1, t_2, t_3) \in \Omega : f_C(t_1) \mid f_B(t_2)\}, \\
+			\Omega_{B \mid A} &= \{(t_1, t_2, t_3) \in \Omega : f_B(t_2) \mid f_A(t_3)\}, \\
+			\Omega_{C \mid A} &= \{(t_1, t_2, t_3) \in \Omega : f_C(t_1) \mid f_A(t_3)\}.
+		\end{align*}
 		
-		Consider an arbitrary pair $(a, c) \in A \times C$. Since $B \in \tsbd{Z}$ is non-empty, there exists at least one element $b \in B$.
+		By classical transitivity of divisibility in $\mathbb{Z}$, for any state $(t_1, t_2, t_3) \in \Omega$, if $f_C(t_1) \mid f_B(t_2)$ and $f_B(t_2) \mid f_A(t_3)$, then $f_C(t_1) \mid f_A(t_3)$.
 		
-		Applying classical divisibility properties in the underlying structure $\mathbb{Z}$:
-		\begin{itemize}
-			\item From $b \in B$, we have $b \mid a$.
-			\item From $b \in B$ and $c \in C$, we have $c \mid b$.
-		\end{itemize}
-		
-		By the transitivity of classical divisibility ($c \mid b$ and $b \mid a \implies c \mid a$), it follows that $c \mid a$.
-		
-		Since this holds for every pair $(a, c) \in A \times C$, by Definition 1.2, $A$ is divisible by $C$, i.e., $C \mid A$.
-		
-		The proof is complete.
+		Therefore, $\Omega_{C \mid B} \cap \Omega_{B \mid A} \subseteq \Omega_{C \mid A}$. Applying monotonicity of measure $\mu$:
+		\[
+		\mu(\Omega_{C \mid A}) \ge \mu(\Omega_{C \mid B} \cap \Omega_{B \mid A})
+		\]
+		Dividing by $\mu(\Omega)$ yields:
+		\[
+		\ddclmd(C \mid A) \ge \ddclmd(C \mid B \land B \mid A)
+		\]
+		When $\ddclmd(C \mid B) = 1$ and $\ddclmd(B \mid A) = 1$, we have $\mu(\Omega_{C \mid B}) = \mu(\Omega)$ and $\mu(\Omega_{B \mid A}) = \mu(\Omega)$, so $\mu(\Omega_{C \mid B} \cap \Omega_{B \mid A}) = \mu(\Omega)$, proving $\ddclmd(C \mid A) = 1$.
 	\end{proof}
-	\begin{definition}[Prime Number]
-		Let $A \in \tsbd{Z}$. $A$ is called an uncertain prime number if for every $a \in A$, $a$ has exactly two divisors in $\mathbb{Z}$, namely $a$ and 1.
-	\end{definition}
-	\begin{definition}[Congruence]
-		Let $A, B, N \in \tsbd{Z}$. We say that $A \equiv B \pmod N$ if and only if for every $(a, b, n) \in A \times B \times N$, we have $a \equiv b \pmod n$.
+	
+	\begin{definition}[Weak Prime Number]
+		An uncertain integer $P \in \tsbd{Z}$ with canonical form $P \sim (f_P, d_P)$ is called an uncertain prime number with truth degree $\gamma = \ddclmd(\text{IsPrime}(P))$, where:
+		\[
+		\ddclmd(\text{IsPrime}(P)) := \frac{\lambda\big(\{t \in d_P : f_P(t) \text{ is a classical prime in } \mathbb{Z}\}\big)}{\lambda(d_P)}
+		\]
+		If $\gamma = 1$, $P$ is called a strictly prime uncertain number.
 	\end{definition}
 	
-	\begin{proposition}[Properties of Congruence Relation]
-		Let $A, B, C, N \in \tsbd{Z}$. The congruence relation in the uncertain space satisfies the following properties:
+	\begin{definition}[Weak Congruence Relation]
+		Let $A, B, N \in \tsbd{Z}$ with canonical forms on $d_A, d_B, d_N$. The weak congruence proposition $A \equiv B \pmod N$ evaluated on state space $\Omega = d_A \times d_B \times d_N$ has truth measure:
+		\[
+		\ddclmd(A \equiv B \pmod N) := \frac{\lambda\big(\{(t_1, t_2, t_3) \in \Omega : f_A(t_1) \equiv f_B(t_2) \pmod{f_N(t_3)}\}\big)}{\lambda(\Omega)}
+		\]
+		We write $(A \equiv B \pmod N)_\gamma$ where $\gamma = \ddclmd(A \equiv B \pmod N)$.
+	\end{definition}
+	
+	\begin{proposition}[Properties of Weak Congruence]
+		Let $A, B, C, N \in \tsbd{Z}$. Weak congruence satisfies:
 		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
-			\item \textbf{Reflexivity:} $A \equiv A \pmod N$.
-			\item \textbf{Symmetry:} If $A \equiv B \pmod N$, then $B \equiv A \pmod N$.
-			\item \textbf{Transitivity:} If $A \equiv B \pmod N$ and $B \equiv C \pmod N$, then $A \equiv C \pmod N$.
+			\item \textbf{Symmetry:} $\ddclmd(A \equiv B \pmod N) = \ddclmd(B \equiv A \pmod N)$.
+			\item \textbf{Transitivity Bound:} 
+			\[
+			\ddclmd(A \equiv C \pmod N) \ge \ddclmd(A \equiv B \pmod N) + \ddclmd(B \equiv C \pmod N) - 1
+			\]
 		\end{enumerate}
 	\end{proposition}
 	
 	\begin{proof}
-		The above properties follow directly from the definition of uncertain congruence relation and the corresponding congruence properties of each element $(a, b, c, n) \in A \times B \times C \times N$ in the underlying integer set $\mathbb{Z}$.
+		$\mathrm{(i)}$ Follows directly from symmetry of classical congruence $a \equiv b \pmod n \iff b \equiv a \pmod n$.
+		
+		$\mathrm{(ii)}$ Let $\Omega = d_A \times d_B \times d_C \times d_N$. Define measurable sets:
+		\begin{align*}
+			E_{AB} &= \{(t_1, t_2, t_3, t_4) \in \Omega : f_A(t_1) \equiv f_B(t_2) \pmod{f_N(t_4)}\}, \\
+			E_{BC} &= \{(t_1, t_2, t_3, t_4) \in \Omega : f_B(t_2) \equiv f_C(t_3) \pmod{f_N(t_4)}\}, \\
+			E_{AC} &= \{(t_1, t_2, t_3, t_4) \in \Omega : f_A(t_1) \equiv f_C(t_3) \pmod{f_N(t_4)}\}.
+		\end{align*}
+		By classical transitivity of congruence, $E_{AB} \cap E_{BC} \subseteq E_{AC}$. Applying Bonferroni's inequality for measures:
+		\[
+		\lambda(E_{AC}) \ge \lambda(E_{AB} \cap E_{BC}) \ge \lambda(E_{AB}) + \lambda(E_{BC}) - \lambda(\Omega)
+		\]
+		Dividing by $\lambda(\Omega)$ establishes the truth measure inequality.
 	\end{proof}
 	
-	\begin{proposition}[Compatibility with Addition and Multiplication]
-		Let $A, B, C, D, N \in \tsbd{Z}$. If $A \equiv B \pmod N$ and $C \equiv D \pmod N$, then:
-		\begin{enumerate}[label=$\mathrm{(\roman*)}$]
-			\item $A + C \equiv B + D \pmod N$,
-			\item $A \cdot C \equiv B \cdot D \pmod N$.
-		\end{enumerate}
+	\begin{proposition}[Compatibility with Algebraic Operations]
+		Let $A, B, C, D, N \in \tsbd{Z}$. In Minkowski space $(\circ)_m$:
+		\[
+		\ddclmd(A + C \equiv B + D \pmod N) \ge \ddclmd(A \equiv B \pmod N \land C \equiv D \pmod N)
+		\]
+		\[
+		\ddclmd(A \cdot C \equiv B \cdot D \pmod N) \ge \ddclmd(A \equiv B \pmod N \land C \equiv D \pmod N)
+		\]
 	\end{proposition}
 	
 	\begin{proof}
-		Assume that $A \equiv B \pmod N$ and $C \equiv D \pmod N$. 
-		
-		According to Definition 1.4 on uncertain congruence, for every $n \in N$:
-		\begin{itemize}
-			\item Since $A \equiv B \pmod N$, for every $(a, b) \in A \times B$, we have $a \equiv b \pmod n$.
-			\item Since $C \equiv D \pmod N$, for every $(c, d) \in C \times D$, we have $c \equiv d \pmod n$.
-		\end{itemize}
-		
-		$\mathrm{(i)}$ Consider an arbitrary element $(a+c, b+d) \in (A+C) \times (B+D)$ and $n \in N$.
-		From classical number theory, if $a \equiv b \pmod n$ and $c \equiv d \pmod n$, then:
-		\[
-		(a + c) \equiv (b + d) \pmod n.
-		\]
-		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.4, we deduce:
-		\[
-		A + C \equiv B + D \pmod N.
-		\]
-		
-		$\mathrm{(ii)}$ Similarly, consider an arbitrary element $(a \cdot c, b \cdot d) \in (A \cdot C) \times (B \cdot D)$ and $n \in N$.
-		From the multiplicative compatibility property of classical congruence, we have:
-		\[
-		a \cdot c \equiv b \cdot d \pmod n.
-		\]
-		Since this holds for every $(a,b,c,d,n) \in A \times B \times C \times D \times N$, by Definition 1.4, we have:
-		\[
-		A \cdot C \equiv B \cdot D \pmod N.
-		\]
-		
-		The proof is complete.
+		Follows from product measure construction over state domain $d_A \times d_B \times d_C \times d_D \times d_N$ and classical algebraic compatibility of congruences $a \equiv b \pmod n \land c \equiv d \pmod n \implies a+c \equiv b+d \pmod n$ and $a \cdot c \equiv b \cdot d \pmod n$.
 	\end{proof}
-	\begin{example}[Nontrivial Spectrum Congruence]
-		Consider the uncertain modulo $N = \{5\} \in \tsbd{Z}$, and two disjoint uncertain integers $A = \{3, 8, 13\}$ and $B = \{18, 23\}$. 
+	
+	\begin{example}[Weak Spectrum Congruence Evaluation]
+		Let $N = \s{5}$, $A = \s{3, 8}$, and $B = \s{18, 23, 24}$.
 		
-		Although $A \cap B = \emptyset$, for every element $a \in A$, $b \in B$, and $n \in N$, we have $a \equiv b \pmod 5$. Thus, by Definition 1.4, $A \equiv B \pmod N$. 
-		
-		Furthermore, any mixed set $C = \{3, 23\}$ generated from elements of $A$ and $B$ satisfies $A \equiv C \equiv B \pmod N$. This illustrates that uncertain congruence acts on the entire residue spectrum rather than individual element identities, preserving algebraic structures even under element replacement.
+		The scenario index space is $d_A \times d_B \times d_N$ of size $2 \times 3 \times 1 = 6$ pairs.
+		We check classical congruence $a \equiv b \pmod 5$ for each pair $(a, b) \in A \times B$:
+		\begin{itemize}
+			\item $(3, 18): 3 \equiv 18 \pmod 5$ (True)
+			\item $(3, 23): 3 \equiv 23 \pmod 5$ (True)
+			\item $(3, 24): 3 \not\equiv 24 \pmod 5$ (False)
+			\item $(8, 18): 8 \equiv 18 \pmod 5$ (True)
+			\item $(8, 23): 8 \equiv 23 \pmod 5$ (True)
+			\item $(8, 24): 8 \not\equiv 24 \pmod 5$ (False)
+		\end{itemize}
+		The number of satisfying scenario states is 4 out of 6. Therefore, the truth measure of weak congruence is:
+		\[
+		\ddclmd(A \equiv B \pmod N) = \frac{4}{6} \approx 0.67
+		\]
+		Thus, we write $\gtcl{A \equiv B \pmod N}{0.67}$.
 	\end{example}
+	
 	\begin{thebibliography}{99}
 		\bibitem{Tran2026}
 		Tran, M. C. (2026). \textit{Extended logic and mathematics of uncertainty}. Zenodo. DOI:
-		\href{https://doi.org/10.5281/zenodo.22031881}{ 10.5281/zenodo.22031881}
+		\href{https://doi.org/10.5281/zenodo.22031881}{10.5281/zenodo.22031881}
 	\end{thebibliography}
 \end{document}
