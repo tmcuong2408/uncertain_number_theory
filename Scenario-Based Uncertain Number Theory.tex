@@ -25,7 +25,7 @@
 	urlcolor=cyan
 }
 
-% Theorem Environments
+% Theorem Environments (Đánh số theo Chapter)
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{md}{Proposition}[chapter]
 \newtheorem{theorem}{Theorem}[chapter]
@@ -69,7 +69,7 @@
 \newcommand{\kgdt}[1]{\left(#1\right)_m} % pointwise operator
 \newcommand{\kgdtmr}[1]{\left(#1\right)_{m'}} % pointwise operator
 
-\title{Uncertain Number Theory}
+\title{\textbf{Scenario-Based Uncertain Number Theory}}
 \author{
 	Tran Manh Cuong\thanks{Email: \href{mailto:tmcuong2408@gmail.com}{tmcuong2408@gmail.com} | Phone: 0353237140} \\[0.5em]
 	\small Alumnus of Faculty of Mathematics and Informatics (K11)
@@ -87,10 +87,48 @@
 		This work reformulates classical Number Theory into the framework of Uncertain Mathematics using weak binary relations and global truth valuation operators over state spaces. By replacing rigid element-wise conditions with truth measures $\ddclmd \in [0,1]$, fundamental concepts such as divisibility, primality, and congruence are generalized to capture probabilistic and scenario-based spectral properties of uncertain integers.
 	\end{abstract}
 	
+	\chapter{Preliminaries on Mathematics of Uncertainty}
+	
+	To ensure this paper is self-contained, we briefly recall key definitions and algebraic structures from the Extended Logic and Mathematics of Uncertainty framework \cite{Tran2026}.
+	
+	\section{Extended Logic and Truth Valuation}
+	Let $(\Omega, \mathcal{F}, \lambda)$ be a measure space representing the scenario/state space of a system. An atomic proposition $P$ possesses a scenario truth function $v(P, \cdot) : \Omega \to \{0, 1\}$.
+	
+	\begin{definition}[Global Truth Valuation Operator]
+		The global truth valuation operator $\ddclmd$ evaluates the truth degree of proposition $P$ over scenario domain $\Omega$:
+		\[
+		\ddclmd(P) := \frac{\lambda\big(\{\omega \in \Omega : v(P, \omega) = 1\}\big)}{\lambda(\Omega)} \in [0, 1]
+		\]
+	\end{definition}
+	
+	\section{Uncertain Numbers and Canonical Representation}
+	
+	\begin{definition}[Uncertain Number]
+		Let $\mathbb{K}$ be an underlying numerical domain (such as a field $\mathbb{R}, \mathbb{C}$ or a commutative ring $\mathbb{Z}$). An uncertain number $A \in \tsbd{K}$ is a quantity whose value belongs to a scenario set $A_s \subseteq \mathbb{K}$.
+	\end{definition}
+	
+	\begin{definition}[Canonical Form]
+		An uncertain number $A \in \tsbd{K}$ is represented in canonical form by a pair $(f_A, d_A)$, written $A \sim (f_A, d_A)$, where $d_A \subseteq \mathbb{K}$ is an index domain and $f_A : d_A \to \mathbb{K}$ is a generating function such that $f_A(d_A) = A_s$.
+	\end{definition}
+	
+	\section{Arithmetic Spaces}
+	Operations over uncertain numbers interact primarily through two fundamental arithmetic spaces:
+	\begin{enumerate}[leftmargin=*]
+		\item \textbf{Single-Point Arithmetic Space $(\circ)_1$:} Preserves internal variable correlation and identity across occurrences within an expression:
+		\[
+		\kgdd{f}(A) = \s{f(x) : x \in A_s}
+		\]
+		\item \textbf{Minkowski Arithmetic Space $(\circ)_m$:} Models independent scenario interactions and noise propagation over product domains:
+		\[
+		(A * B)_m = \s{a * b : a \in A_s, b \in B_s}
+		\]
+		with canonical representation on index space $d_{A * B} = d_A \times d_B$.
+	\end{enumerate}
+	
 	\chapter{Divisibility and Prime Numbers via Weak Relations}
 	
 	\begin{definition}[Uncertain Integer]
-		An element $A \in \tsbd{K}$ is called an uncertain integer if its set of possible values belongs to the set of classical integers $\mathbb{Z}$, i.e., $A_s \subseteq \mathbb{Z}$. The set of all uncertain integers is denoted by $\tsbd{Z}$.
+		An element $A \in \tsbd{K}$ is called an uncertain integer if its set of possible scenario values belongs to the set of classical integers $\mathbb{Z}$, i.e., $A_s \subseteq \mathbb{Z}$. The set of all uncertain integers is denoted by $\tsbd{Z}$.
 	\end{definition}
 	
 	\begin{definition}[Weak Divisibility Relation]
